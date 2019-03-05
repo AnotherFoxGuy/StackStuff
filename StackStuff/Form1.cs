@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -33,16 +34,17 @@ namespace StackStuff
             label1.Text = "";
             var st = new Stack<char>();
 
+            var regex = new Regex(@"([\[\]\{\}\(\)\<\>])");
             var y = true;
+
             foreach (var x in s)
             {
                 label1.Text +=
-                    $"\n {x} ar: {Array.FindIndex(start, w => w == x)} ghhg: {Array.FindIndex(end, w => w == x)}";
-                if (Array.FindIndex(start, w => w == x) == -1)
-                    return;
-                if (Array.FindIndex(end, w => w == x) == -1)
-                    return;
+                    $"\n {x}";
 
+                var match = regex.Match($"{x}");
+                if (!match.Success)
+                    continue;
 
                 if (start.Contains(x))
                 {
